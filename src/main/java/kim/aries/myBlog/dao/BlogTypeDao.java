@@ -1,6 +1,7 @@
 package kim.aries.myBlog.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kim.aries.myBlog.domain.BlogType;
 
@@ -14,4 +15,11 @@ public interface BlogTypeDao {
 	 */
 	int addBlogType(BlogType blogType);
 
+	/**
+	 * 删除维护记录（由删除博客引起的）
+	 * 
+	 * @param blogId
+	 * @return
+	 */
+	int delBlogTypeByBlogId(@Param("blogId") int blogId);
 }

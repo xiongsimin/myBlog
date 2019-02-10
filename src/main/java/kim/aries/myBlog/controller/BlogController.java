@@ -34,14 +34,19 @@ public class BlogController {
 	@PostMapping("/delBlog")
 	String delBlog(int id) {
 		Blog blog = this.blogService.findBlogById(id);
-		try {
-			this.blogService.delBlog(blog);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "删除失败！";
+		if (blog != null) {
+			try {
+				this.blogService.delBlog(blog);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "删除失败！";
+			}
+			return "删除成功！";
+		} else {
+			return "该博客不存在！";
 		}
-		return "删除成功！";
+
 	}
 
 	@PostMapping("/findBlog")

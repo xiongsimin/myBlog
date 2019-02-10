@@ -53,9 +53,13 @@ public class BlogServiceImpl implements BlogService {
 	@Transactional(rollbackFor = Exception.class)
 	public void delBlog(Blog blog) throws Exception {
 		// TODO Auto-generated method stub
+		// 1删除属于博客的标签
+		// 2删除维护“博客-类型”关系记录
+		// 3删除博客
 		for (Tag tag : blog.getTags()) {
 			this.tagDao.delTag(tag);
 		}
+		this.blogTypeDao.delBlogTypeByBlogId(blog.getId());
 		this.blogDao.delBlog(blog);
 	}
 

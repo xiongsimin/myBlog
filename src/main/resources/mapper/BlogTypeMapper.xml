@@ -6,4 +6,7 @@
 		INSERT INTO
 		blog_type(blog_id,type_id)VALUES(#{blogId},#{typeId})
 	</insert>
+	<delete id="delBlogTypeByBlogId" parameterType="int">
+		DELETE FROM blog_type WHERE blog_id=#{blogId}
+	</delete>
 </mapper>
