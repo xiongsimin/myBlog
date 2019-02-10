@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kim.aries.myBlog.dao.TypeDao">
+	<insert id="addType" parameterType="Type" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO
+		type(type_name)VALUES(#{typeName})
+	</insert>
+	<delete id="delType" parameterType="Type">
+		DELETE FROM type WHERE
+		id=#{id}
+	</delete>
+	<select id="findTypesByBlogId" parameterType="int" resultType="Type">
+		SELECT * FROM type t,blog_type b WHERE b.blog_id=#{id} AND
+		b.type_id=t.id
+	</select>
+	<select id="findTypeByName" parameterType="String" resultType="Type">
+		SELECT * FROM type WHERE type_name=#{typeName}
+	</select>
+</mapper>

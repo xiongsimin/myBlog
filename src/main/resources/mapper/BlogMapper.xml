@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kim.aries.myBlog.dao.BlogDao">
+	<insert id="addBlog" parameterType="Blog" useGeneratedKeys="true"
+		keyProperty="id">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		blog(title,content,create_time,update_time)VALUES(#{title},#{content},#{createTime},#{updateTime})
+	</insert>
+	<delete id="delBlog" parameterType="Blog">
+		DELETE FROM blog WHERE
+		id=#{id}
+	</delete>
+	<update id="editBlog" parameterType="Blog">
+		UPDATE blog SET
+		title=#{title},content=#{content},update_time=#{updateTime}
+	</update>
+	<select id="findBlogById" parameterType="int" resultMap="blogMap">
+		SELECT
+		*
+		FROM blog WHERE id=#{id}
+	</select>
+	<resultMap type="Blog" id="blogMap">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<!-- 注意：这里的select属性写的是xml里面的 -->
+		<collection property="tags" javaType="ArrayList" column="id"
+			ofType="Tag" select="kim.aries.myBlog.dao.TagDao.findTagsByBlogId"
+			fetchType="eager">
+			<id property="id" column="id" />
+			<result property="tagName" column="tag_name" />
+		</collection>
+		<collection property="types" javaType="ArrayList" column="id"
+			ofType="Type" select="kim.aries.myBlog.dao.TypeDao.findTypesByBlogId"
+			fetchType="eager">
+			<id property="id" column="id" />
+			<result property="typeName" column="type_name" />
+		</collection>
+	</resultMap>
+</mapper>
