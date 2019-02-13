@@ -21,14 +21,15 @@ public interface TypeDao {
 	 * 
 	 * @param id
 	 */
-	int delTypeById(@Param("id") int id);
+	int delTypeById(@Param("typeId") int typeId);
 
 	/**
 	 * 编辑文章分类
 	 * 
 	 * @param type
+	 * @return
 	 */
-	int editTypeName(Type type);
+	int editType(Type type);
 
 	/**
 	 * 根据id查找文章类型
@@ -40,6 +41,7 @@ public interface TypeDao {
 
 	/**
 	 * 根据类型名查找类型
+	 * 
 	 * @param typeName
 	 * @return
 	 */
@@ -54,9 +56,16 @@ public interface TypeDao {
 	List<Type> findTypesByBlogId(@Param("id") int id);
 
 	/**
-	 * 获取所有文章分类
+	 * 获取所有文章分类（管理员后台）
 	 * 
 	 * @return
 	 */
 	List<Type> getAllType();
+
+	/**
+	 * 获取主页允许显示的文章类型
+	 * 
+	 * @return
+	 */
+	List<Type> getShowType();
 }

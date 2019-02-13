@@ -37,7 +37,7 @@ public class AdminController {
 				HttpSession session = HttpUtil.getSession();
 				session.setAttribute("login", "true");
 				session.setAttribute("id", admin.getId());
-				return "登陆成功！";
+				return "登录成功！";
 			} else {
 				return "账号密码不匹配！";
 			}

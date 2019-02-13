@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kim.aries.myBlog.dao.TagDao">
-	<insert id="addTag" parameterType="Tag" useGeneratedKeys="true" keyProperty="id">
+	<insert id="addTag" parameterType="Tag" useGeneratedKeys="true"
+		keyProperty="id">
 		INSERT
 		INTO
 		tag(tag_name,blog_id)VALUES(#{tagName},#{blogId})
@@ -12,4 +13,7 @@
 	<select id="findTagsByBlogId" parameterType="int" resultType="Tag">
 		SELECT * FROM tag WHERE blog_id=#{blogId}
 	</select>
+	<update id="editTag" parameterType="Tag">
+		UPDATE tag SET tag_name=#{tagName} WHERE id=#{id}
+	</update>
 </mapper>

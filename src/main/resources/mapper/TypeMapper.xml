@@ -4,17 +4,29 @@
 	<insert id="addType" parameterType="Type" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO
-		type(type_name)VALUES(#{typeName})
+		type(type_name,show)VALUES(#{typeName},#{show})
 	</insert>
-	<delete id="delType" parameterType="Type">
+	<delete id="delTypeById" parameterType="int">
 		DELETE FROM type WHERE
-		id=#{id}
+		id=#{typeId}
 	</delete>
+	<update id="editType" parameterType="Type">
+		UPDATE type SET type_name=#{typeName},show=#{show}
+	</update>
 	<select id="findTypesByBlogId" parameterType="int" resultType="Type">
 		SELECT * FROM type t,blog_type b WHERE b.blog_id=#{id} AND
 		b.type_id=t.id
 	</select>
 	<select id="findTypeByName" parameterType="String" resultType="Type">
 		SELECT * FROM type WHERE type_name=#{typeName}
+	</select>
+	<select id="getAllType" resultType="Type">
+		SELECT id,type_name,COUNT(*)
+		as `count` FROM type
+	</select>
+	<select id="getShowType" resultType="Type">
+		SELECT id,type_name,COUNT(*)
+		as `count` FROM type WHERE
+		show=1
 	</select>
 </mapper>

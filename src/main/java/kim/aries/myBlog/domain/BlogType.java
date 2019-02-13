@@ -1,7 +1,11 @@
 package kim.aries.myBlog.domain;
 
 import java.io.Serializable;
-
+/**
+ * 表blog_type对应的实体
+ * @author 白羊座
+ *
+ */
 public class BlogType implements Serializable {
 	private int blogId;
 	private int typeId;

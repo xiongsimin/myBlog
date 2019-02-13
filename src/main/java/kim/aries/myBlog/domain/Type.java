@@ -6,6 +6,8 @@ import java.util.List;
 public class Type implements Serializable {
 	private int id;
 	private String typeName;
+	private int show;
+	private int count;
 	private List<Blog> blogs;
 
 	public Type() {
@@ -13,15 +15,12 @@ public class Type implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Type(String typeName) {
-		super();
-		this.typeName = typeName;
-	}
-
-	public Type(int id, String typeName, List<Blog> blogs) {
+	public Type(int id, String typeName, int show, int count, List<Blog> blogs) {
 		super();
 		this.id = id;
 		this.typeName = typeName;
+		this.show = show;
+		this.count = count;
 		this.blogs = blogs;
 	}
 
@@ -49,9 +48,26 @@ public class Type implements Serializable {
 		this.blogs = blogs;
 	}
 
+	public int getShow() {
+		return show;
+	}
+
+	public void setShow(int show) {
+		this.show = show;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
-		return "Type [id=" + id + ", typeName=" + typeName + ", blogs=" + blogs + "]";
+		return "Type [id=" + id + ", typeName=" + typeName + ", show=" + show + ", count=" + count + ", blogs=" + blogs
+				+ "]";
 	}
 
 }

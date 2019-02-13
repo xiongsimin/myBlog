@@ -47,5 +47,21 @@ public interface BlogDao {
 	 */
 	List<Blog> searchBlogByKey(@Param("key") String key);
 
+	/**
+	 * 查找属于某类型的博客（管理员后台）
+	 * 
+	 * @param typeId
+	 * @return
+	 */
+	List<Blog> findBlogByTypeIdThroughAdmin(@Param("typeId") int typeId);
+
+	/**
+	 * 查找属于某类型的博客（主页）
+	 * 
+	 * @param typeId
+	 * @return
+	 */
+	List<Blog> findBlogByTypeId(@Param("typeId") int typeId);
+
 	void getM();
 }

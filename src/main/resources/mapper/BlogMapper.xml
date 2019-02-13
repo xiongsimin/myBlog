@@ -43,4 +43,13 @@
 			<result property="typeName" column="type_name" />
 		</collection>
 	</resultMap>
+	<select id="findBlogByTypeIdThroughAdmin" parameterType="int"
+		resultType="Blog">
+		SELECT * FROM blog b,blog_type bt WHERE b.id=bt.blog_id AND
+		bt.type_id=#{typeId}
+	</select>
+	<select id="findBlogByTypeId" parameterType="int" resultType="Blog">
+		SELECT * FROM blog b,blog_type bt,type t WHERE b.id=bt.blog_id AND
+		bt.type_id=#{typeId} AND t.id=bt.type_id AND t.show=1
+	</select>
 </mapper>
