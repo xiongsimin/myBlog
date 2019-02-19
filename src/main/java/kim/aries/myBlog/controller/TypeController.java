@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kim.aries.myBlog.domain.Result;
 import kim.aries.myBlog.domain.Type;
 import kim.aries.myBlog.service.TypeService;
 
@@ -17,40 +18,55 @@ public class TypeController {
 	private TypeService typeService;
 
 	@PostMapping("/addType")
-	String addType(@RequestBody Type type) {
+	Result addType(@RequestBody Type type, Result result) {
 		if (this.typeService.addType(type) == 1) {
-			return "添加成功!";
+			result.setSuccess(true);
+			result.setMsg("添加成功！");
 		} else {
-			return "添加失败！";
+			result.setSuccess(true);
+			result.setMsg("添加失败！");
 		}
+		return result;
 	}
 
 	@GetMapping("/delType")
-	String delType(int typeId) {
+	Result delType(int typeId, Result result) {
 		if (this.typeService.delTypeById(typeId) == 1) {
-			return "删除成功！";
+			result.setSuccess(true);
+			result.setMsg("删除成功！");
 		} else {
-			return "删除失败！";
+			result.setSuccess(false);
+			result.setMsg("删除失败！");
 		}
+		return result;
 	}
 
 	@GetMapping("/getAllType")
-	List<Type> getAllType() {
-		return this.typeService.getAllType();
+	Result getAllType(Result result) {
+		List<Type> typeList = this.typeService.getAllType();
+		result.setSuccess(true);
+		result.setData(typeList);
+		return result;
 	}
 
 	@GetMapping("/getShowType")
-	List<Type> getShowType() {
-		return this.typeService.getShowType();
+	Result getShowType(Result result) {
+		List<Type> typeList = this.typeService.getShowType();
+		result.setSuccess(true);
+		result.setData(typeList);
+		return result;
 	}
 
 	@PostMapping("/editType")
-	String editType(Type type) {
+	Result editType(Type type, Result result) {
 		if (this.typeService.editType(type) == 1) {
-			return "修改成功！";
+			result.setSuccess(true);
+			result.setMsg("修改成功！");
 		} else {
-			return "修改失败！";
+			result.setSuccess(true);
+			result.setMsg("修改失败！");
 		}
+		return result;
 
 	}
 }

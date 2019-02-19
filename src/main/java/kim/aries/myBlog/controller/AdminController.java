@@ -4,11 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kim.aries.myBlog.domain.Admin;
+import kim.aries.myBlog.domain.Result;
 import kim.aries.myBlog.service.AdminService;
 import kim.aries.myBlog.util.HttpUtil;
 
@@ -30,20 +30,24 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping("/login")
-	String login(int id, String password) {
+	Result login(int id, String password, Result result) {
 		Admin admin = this.adminService.findAdminById(id);
 		if (admin != null) {
 			if (admin.getPassword().equals(password)) {
 				HttpSession session = HttpUtil.getSession();
 				session.setAttribute("login", "true");
 				session.setAttribute("id", admin.getId());
-				return "登录成功！";
+				result.setMsg("登陆成功！");
+				result.setSuccess(true);
 			} else {
-				return "账号密码不匹配！";
+				result.setMsg("账号密码不匹配！");
+				result.setSuccess(false);
 			}
 		} else {
-			return "账号不存在！";
+			result.setMsg("账号不存在！");
+			result.setSuccess(false);
 		}
+		return result;
 	}
 
 	/**
@@ -54,14 +58,18 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping("/editAdminName")
-	String editAdminName(String name, @SessionAttribute("id") int id) {
+	Result editAdminName(String name, @SessionAttribute("id") int id, Result result) {
 		Admin admin = this.adminService.findAdminById(id);
 		if (admin.getName().equals(name)) {
-			return "未做任何修改！";
+			result.setSuccess(false);
+			result.setMsg("未做任何修改！");
+			return result;
 		}
 		admin.setName(name);
 		this.adminService.editAdminName(admin);
-		return "修改成功！";
+		result.setSuccess(true);
+		result.setMsg("修改成功！");
+		return result;
 	}
 
 	/**
@@ -73,18 +81,22 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping("/changePassword")
-	String changePassword(String oldPassword, String newPassword, @SessionAttribute("id") int id) {
+	Result changePassword(String oldPassword, String newPassword, @SessionAttribute("id") int id, Result result) {
 		Admin admin = this.adminService.findAdminById(id);
 		if (!admin.getPassword().equals(oldPassword)) {
-			return "密码修改失败！【原密码错误】";
+			result.setMsg("密码修改失败！【原密码错误】");
+			result.setSuccess(false);
 		} else {
 			if (oldPassword.equals(newPassword)) {
-				return "密码修改失败！【新旧密码相同】";
+				result.setMsg("修改成功！");
+				result.setSuccess(true);
 			} else {
 				admin.setPassword(newPassword);
 				this.adminService.changePassword(admin);
-				return "密码修改成功！";
+				result.setMsg("密码修改失败！【原密码错误】");
+				result.setSuccess(false);
 			}
 		}
+		return result;
 	}
 }

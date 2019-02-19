@@ -4,7 +4,7 @@
 	<insert id="addType" parameterType="Type" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO
-		type(type_name,show)VALUES(#{typeName},#{show})
+		type(type_name,`show`)VALUES(#{typeName},#{show})
 	</insert>
 	<delete id="delTypeById" parameterType="int">
 		DELETE FROM type WHERE
