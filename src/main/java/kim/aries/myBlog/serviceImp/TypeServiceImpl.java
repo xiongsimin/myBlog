@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kim.aries.myBlog.dao.TypeDao;
 import kim.aries.myBlog.domain.Type;
@@ -29,19 +30,34 @@ public class TypeServiceImpl implements TypeService {
 	@Override
 	public List<Type> getAllType() {
 		// TODO Auto-generated method stub
-		return this.typeDao.getAllType();
+		List<Type> typeList=this.typeDao.getAllType();
+		for(Type type:typeList){
+			type.setCount(this.typeDao.countBlog(type.getId()));
+		}
+		return typeList;
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public List<Type> getShowType() {
 		// TODO Auto-generated method stub
-		return this.typeDao.getShowType();
+		List<Type> typeList=this.typeDao.getShowType();
+		for(Type type:typeList){
+			type.setCount(this.typeDao.countBlog(type.getId()));
+		}
+		return typeList;
 	}
 
 	@Override
 	public int editType(Type type) {
 		// TODO Auto-generated method stub
 		return this.typeDao.editType(type);
+	}
+
+	@Override
+	public Type findTypeById(int id) {
+		// TODO Auto-generated method stub
+		return this.typeDao.findTypeById(id);
 	}
 
 }

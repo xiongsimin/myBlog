@@ -3,6 +3,7 @@ package kim.aries.myBlog.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -17,6 +18,7 @@ import kim.aries.myBlog.util.HttpUtil;
  * @author 白羊座
  *
  */
+@CrossOrigin
 @RestController
 public class AdminController {
 	@Autowired

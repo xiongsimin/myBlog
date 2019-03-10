@@ -56,4 +56,11 @@ public interface BlogService {
 	 * @return
 	 */
 	List<Blog> findBlogByTypeId(int typeId);
+
+	/**
+	 * 获取最近的10篇博客
+	 * 
+	 * @return
+	 */
+	List<Blog> getTopTenBlogs();
 }

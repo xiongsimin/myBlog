@@ -3,10 +3,6 @@
 <mapper namespace="kim.aries.myBlog.dao.BlogDao">
 	<insert id="addBlog" parameterType="Blog" useGeneratedKeys="true"
 		keyProperty="id">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT
-			LAST_INSERT_ID()
-		</selectKey>
 		INSERT INTO
 		blog(title,content,create_time,update_time)VALUES(#{title},#{content},#{createTime},#{updateTime})
 	</insert>
@@ -51,5 +47,8 @@
 	<select id="findBlogByTypeId" parameterType="int" resultType="Blog">
 		SELECT * FROM blog b,blog_type bt,type t WHERE b.id=bt.blog_id AND
 		bt.type_id=#{typeId} AND t.id=bt.type_id AND t.show=1
+	</select>
+	<select id="getTopTenBlogs" resultType="Blog" resultMap="blogMap">
+		SELECT * FROM blog ORDER BY create_time DESC LIMIT 10
 	</select>
 </mapper>

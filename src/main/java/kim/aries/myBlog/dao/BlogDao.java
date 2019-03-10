@@ -63,5 +63,10 @@ public interface BlogDao {
 	 */
 	List<Blog> findBlogByTypeId(@Param("typeId") int typeId);
 
-	void getM();
+	/**
+	 * 获取最近的10篇博客
+	 * 
+	 * @return
+	 */
+	List<Blog> getTopTenBlogs();
 }

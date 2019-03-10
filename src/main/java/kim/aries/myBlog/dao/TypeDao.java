@@ -68,4 +68,11 @@ public interface TypeDao {
 	 * @return
 	 */
 	List<Type> getShowType();
+
+	/**
+	 * 获取某类型文章的数量
+	 * @param typeId
+	 * @return
+	 */
+	int countBlog(@Param("typeId") int typeId);
 }

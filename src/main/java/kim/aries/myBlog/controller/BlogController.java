@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import kim.aries.myBlog.domain.BlogTagType;
 import kim.aries.myBlog.domain.Result;
 import kim.aries.myBlog.service.BlogService;
 
+@CrossOrigin
 @RestController
 public class BlogController {
 	@Autowired
@@ -87,7 +89,7 @@ public class BlogController {
 		return result;
 	}
 
-	@PostMapping("/findBlog")
+	@GetMapping("/findBlog")
 	Result findBlog(int id, Result result) {
 		Blog blog = this.blogService.findBlogById(id);
 		result.setSuccess(true);
@@ -106,6 +108,14 @@ public class BlogController {
 	@GetMapping("/findBlogByTypeId")
 	Result findBlogByTypeId(int typeId, Result result) {
 		List<Blog> blogList = this.blogService.findBlogByTypeId(typeId);
+		result.setSuccess(true);
+		result.setData(blogList);
+		return result;
+	}
+
+	@GetMapping("/getTopTenBlogs")
+	Result getTopTenBlogs(Result result) {
+		List<Blog> blogList = this.blogService.getTopTenBlogs();
 		result.setSuccess(true);
 		result.setData(blogList);
 		return result;

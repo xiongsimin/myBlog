@@ -11,8 +11,13 @@
 		id=#{typeId}
 	</delete>
 	<update id="editType" parameterType="Type">
-		UPDATE type SET type_name=#{typeName},show=#{show}
+		UPDATE type SET
+		type_name=#{typeName},show=#{show}
 	</update>
+	<select id="findTypeById" parameterType="int" resultType="Type">
+		SELECT
+		* FROM type WHERE id=#{id}
+	</select>
 	<select id="findTypesByBlogId" parameterType="int" resultType="Type">
 		SELECT * FROM type t,blog_type b WHERE b.blog_id=#{id} AND
 		b.type_id=t.id
@@ -20,13 +25,29 @@
 	<select id="findTypeByName" parameterType="String" resultType="Type">
 		SELECT * FROM type WHERE type_name=#{typeName}
 	</select>
-	<select id="getAllType" resultType="Type">
-		SELECT id,type_name,COUNT(*)
-		as `count` FROM type
+	<select id="getAllType" resultMap="TypeMap">
+		SELECT id,type_name,`show`
+		FROM type
 	</select>
+	<resultMap type="Type" id="TypeMap">
+		<id property="id" column="id" />
+		<result property="typeName" column="type_name" />
+		<collection property="blogs" fetchType="eager" column="id"
+			javaType="ArrayList" ofType="Blog" select="kim.aries.myBlog.dao.BlogDao.findBlogByTypeIdThroughAdmin">
+			<id property="id" column="id"/>
+			<result property="title" column="title"/>
+		</collection>
+	</resultMap>
 	<select id="getShowType" resultType="Type">
-		SELECT id,type_name,COUNT(*)
-		as `count` FROM type WHERE
-		show=1
+		SELECT id,type_name,`show`
+		FROM
+		type WHERE
+		`show`=1
+	</select>
+	<select id="countBlog" parameterType="int" resultType="int">
+		SELECT
+		COUNT(*) FROM blog
+		b,blog_type bt WHERE b.id=bt.blog_id AND
+		bt.type_id=#{typeId}
 	</select>
 </mapper>

@@ -7,7 +7,7 @@ public class Type implements Serializable {
 	private int id;
 	private String typeName;
 	private int show;
-	private int count;
+	private int count;//该类型下文章数量
 	private List<Blog> blogs;
 
 	public Type() {

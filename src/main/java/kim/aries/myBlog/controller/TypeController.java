@@ -3,6 +3,7 @@ package kim.aries.myBlog.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kim.aries.myBlog.domain.Result;
 import kim.aries.myBlog.domain.Type;
 import kim.aries.myBlog.service.TypeService;
-
+@CrossOrigin
 @RestController
 public class TypeController {
 	@Autowired
@@ -68,5 +69,12 @@ public class TypeController {
 		}
 		return result;
 
+	}
+	@GetMapping("/findTypeById")
+	Result findTypeById(int id, Result result){
+		Type type=this.typeService.findTypeById(id);
+		result.setSuccess(true);
+		result.setData(type);
+		return result;
 	}
 }

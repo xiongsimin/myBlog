@@ -33,10 +33,13 @@ public class BlogServiceImpl implements BlogService {
 	public void addBlog(Blog blog) throws Exception {
 		// TODO Auto-generated method stub
 		this.blogDao.addBlog(blog);
-		for (Tag tag : blog.getTags()) {
-			tag.setBlogId(blog.getId());
-			this.tagDao.addTag(tag);
+		if (blog.getTags() != null) {
+			for (Tag tag : blog.getTags()) {
+				tag.setBlogId(blog.getId());
+				this.tagDao.addTag(tag);
+			}
 		}
+
 		/*
 		 * for (Type type : blog.getTypes()) { //
 		 * 1.先判断类型是否存在（存在：直接第2步；不存在：先新增类型再执行第2步） // 2.再新增维护“博客-类型”关系记录 Type
@@ -50,10 +53,15 @@ public class BlogServiceImpl implements BlogService {
 		 */
 
 		// 新增维护“博客-类型”关系记录
-		for (Type type : blog.getTypes()) {
-			BlogType blogType = new BlogType(blog.getId(), type.getId());
-			this.blogTypeDao.addBlogType(blogType);
+		if (blog.getTypes() != null) {
+			for (Type type : blog.getTypes()) {
+				BlogType blogType = new BlogType(blog.getId(), type.getId());
+				this.blogTypeDao.addBlogType(blogType);
+			}
+		} else {
+			throw new Exception("必须选中一种类型");
 		}
+
 	}
 
 	@Override
@@ -120,7 +128,13 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<Blog> findBlogByTypeId(int typeId) {
 		// TODO Auto-generated method stub
-		return this.findBlogByTypeId(typeId);
+		return this.blogDao.findBlogByTypeId(typeId);
+	}
+
+	@Override
+	public List<Blog> getTopTenBlogs() {
+		// TODO Auto-generated method stub
+		return this.blogDao.getTopTenBlogs();
 	}
 
 }
